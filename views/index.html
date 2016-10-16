@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>我的音乐</title>
+    <script src="js/libs/jquery-1.9.1.min.js"></script>
+    <script src="js/libs/vue.js"></script>
+
+  </head>
+  <body>
+    <button type="button" id="start">选择一个文件夹</button>
+    <div style="height: 5em">
+        <p>当前音乐:<b id="current_music"></b></p>
+        <audio id="audio" controls/>
+    </div>
+    <ul id="list">
+        <li v-for="item in items">
+            <div @click="checkout(item)">
+                {{ item.fileName }}
+            </div>
+        </li>
+    </ul>
+    <script>
+        var list = new Vue({
+            el: '#list'
+            ,data: {
+                items: []
+            }
+            ,methods:{
+                checkout : function (item) {
+                    $('#current_music').html(item.fileName);
+                    $('#audio').attr('src',item.basePath + '/' +item.fileName);
+                }
+            }
+        });
+
+        var fileUtil = require('./js/utils/fileUtil');
+        var fs = require('fs');
+        $('#start').click(function () {
+            const {dialog} = require('electron').remote;
+            dialog.showOpenDialog({
+                properties: ['openDirectory']
+            },function(path){
+                if(path){
+                    var choosedDir = path.toString();
+                    fileUtil.readdir(choosedDir,function (files) {
+                        files.forEach(function (file) {
+                            if(file.indexOf('aac') > 0 || file.indexOf('mp3') > 0){
+                                list.items.push({fileName:file,basePath:choosedDir})
+                            }
+                        })
+                    });
+                }else {
+                    console.log("No path selected");
+                }
+            });
+        });
+
+
+    </script>
+  </body>
+</html>

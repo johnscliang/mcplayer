@@ -16,5 +16,6 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^1.4.3"
+    ,"chokidar": "^1.5.1"
   }
 }
