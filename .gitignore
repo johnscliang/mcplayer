@@ -1,3 +1,5 @@
 node_modules
 /.idea/
 /mcplay-*
+*.zip
+/mcplayer/
