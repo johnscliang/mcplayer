@@ -17,5 +17,6 @@
   "devDependencies": {
     "electron": "^1.4.3"
     ,"chokidar": "^1.5.1"
+    ,"mime-types": "^2.1.12"
   }
 }

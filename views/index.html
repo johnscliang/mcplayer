@@ -43,11 +43,10 @@
             },function(path){
                 if(path){
                     var choosedDir = path.toString();
-                    fileUtil.readdir(choosedDir,function (files) {
+                    fileUtil.getAudios(choosedDir,function (files) {
+                        list.items = [];
                         files.forEach(function (file) {
-                            if(file.indexOf('aac') > 0 || file.indexOf('mp3') > 0){
-                                list.items.push({fileName:file,basePath:choosedDir})
-                            }
+                            list.items.push({fileName:file,basePath:choosedDir})
                         })
                     });
                 }else {
@@ -57,6 +56,22 @@
         });
 
 
+    </script>
+
+  <script src="../server.js"></script>
+
+    <script src="./js/libs/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:3000');
+        socket.on('test', function (data){
+            console.log('服务端收到');
+            console.log(data);
+//            if(audio.paused){
+//                audio.play();
+//                return;
+//            }
+//            audio.pause();
+        });
     </script>
   </body>
 </html>

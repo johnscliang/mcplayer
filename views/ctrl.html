@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>遥控器</title>
+    <script src="js/libs/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+<button onclick="send('test','play','pp')">播放或暂停</button>
+</body>
+<script>
+    function send(token,order,value) {
+        var url = 'http://localhost:3000/c/'+token+'/'+order+'/'+value;
+        console.log(url);
+        $.get(url,function (data,st) {
+            console.log(data)
+        });
+    }
+</script>
+</html>
