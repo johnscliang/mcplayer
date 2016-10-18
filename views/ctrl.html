@@ -4,19 +4,35 @@
     <meta charset="UTF-8">
     <title>遥控器</title>
     <script src="js/libs/jquery-1.9.1.min.js" type="text/javascript"></script>
-
+    <style>
+        button{
+            width: 12em;
+            height: 12em;
+        }
+        input{
+            width: 3em;
+            height: 3em;
+        }
+    </style>
 </head>
 <body>
-<button onclick="send('test','play','pp')">播放或暂停</button>
-<button onclick="send('test','play','back')">上一首</button>
-<button onclick="send('test','play','front')">下一首</button>
-<button onclick="send('test','play','random')">随机播放一个</button>
-<p>
-    播放模式:
-    <input id="play_style_normal" class="radio" checked type="radio" name="play_style" value="normal" />顺序
-    <input id="play_style_desc"class="radio" type="radio" name="play_style" value="desc" />倒序
-    <input id="play_style_random"class="radio" type="radio" name="play_style" value="random" />随机
-</p>
+<div style="padding: 2em;text-align: center">
+    <button onclick="send('test','play','pp')"><span style="font-size: 3em">播放<br/>暂停</span></button><br/><br/>
+    <button onclick="send('test','play','front')"><span style="font-size: 3em">下一首</span></button><br/><br/>
+    <button onclick="send('test','play','back')"><span style="font-size: 3em">上一首</span></button><br/><br/>
+    <button onclick="send('test','play','random')"><span style="font-size: 3em">随机播放一个</span></button>
+
+    <br/>
+    <br/>
+
+    <p style="font-size: 3em">
+        播放模式:
+        <input id="play_style_normal" class="radio" checked type="radio" name="play_style" value="normal" />顺序
+        <input id="play_style_desc"class="radio" type="radio" name="play_style" value="desc" />倒序
+        <input id="play_style_random"class="radio" type="radio" name="play_style" value="random" />随机
+    </p>
+</div>
+
 
 </body>
 <script>

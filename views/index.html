@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <title>我的音乐</title>
     <script src="js/libs/jquery-1.9.1.min.js"></script>
+    <script src="js/libs/jquery.qrcode.min.js"></script>
     <script src="js/libs/vue.js"></script>
     <script src="js/utils/RandomUtil.js"></script>
 
   </head>
   <body>
     <button type="button" id="start">选择一个文件夹</button>
+    &nbsp;&nbsp;<span id="current_dir">当前文件夹</span>
+    <br/>
+    <br/>
+    <div style="padding: 1em;border: 2px solid red;text-align: center">
+        <p>扫码进入控制器</p>
+        <div style="position: relative;left: 35%" id="qrcode"></div>
+    </div>
     <div style="height: 8em">
-        <p>播放模式:<span id="play_style">顺序</span>
-        </p>
+
+        <p>播放模式:<span id="play_style">顺序</span></p>
         <p>当前音乐:<b id="current_music"></b></p>
         <audio id="audio" controls autoplay/>
     </div>
@@ -60,6 +68,7 @@
         });
 
         function startListMusic(choosedDir){
+            $('#current_dir').html(choosedDir);
             fileUtil.getAudios(choosedDir,function (files) {
                 list.items = [];//清空
                 files.forEach(function (file) {

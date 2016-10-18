@@ -89,3 +89,15 @@ router.get('/setting/:play_style', function(req, res) {
         ,info : 'send ok!'
     })
 });
+
+//本机ip
+require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+    console.log('本机ip: '+add);
+    $("#qrcode").qrcode({
+        render: "table", //table方式
+        width: 100, //宽度
+        height:100, //高度
+        text: 'http://'+add+':3000/ctrl.html' //任意内容
+    });
+});
+
