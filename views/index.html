@@ -5,6 +5,7 @@
     <title>我的音乐</title>
     <script src="js/libs/jquery-1.9.1.min.js"></script>
     <script src="js/libs/vue.js"></script>
+    <script src="js/utils/RandomUtil.js"></script>
 
   </head>
   <body>
@@ -21,6 +22,10 @@
         </li>
     </ul>
     <script>
+
+        var mList = [];//音乐
+        var mCurrentIndex = 0;
+
         var list = new Vue({
             el: '#list'
             ,data: {
@@ -42,24 +47,48 @@
                 properties: ['openDirectory']
             },function(path){
                 if(path){
-                    var choosedDir = path.toString();
-                    fileUtil.getAudios(choosedDir,function (files) {
-                        list.items = [];
-                        files.forEach(function (file) {
-                            list.items.push({fileName:file,basePath:choosedDir})
-                        });
-                        //发送歌单给后台
-                        $.post('http://localhost:3000/saveList',{music_list:JSON.stringify(files)},function (data) {
-                            console.log(data)
-                        });
-                    });
-
+                    window.localStorage.setItem('music_path',path.toString());
+                    startListMusic(path.toString())
                 }else {
                     console.log("No path selected");
                 }
             });
         });
 
+        function startListMusic(choosedDir){
+            fileUtil.getAudios(choosedDir,function (files) {
+                list.items = [];//清空
+                files.forEach(function (file) {
+                    list.items.push({fileName:file,basePath:choosedDir})
+                });
+                //设置第一首歌
+                var firstSong = files[0];
+                console.log('第一首歌');
+                console.log(choosedDir);
+                console.log(firstSong);
+                if(firstSong){
+                    setMusic(firstSong)
+                }
+                mList = files;//放到全局
+                //发送歌单给后台
+                $.post('http://localhost:3000/saveList',{music_list:JSON.stringify(files)},function (data) {
+                    console.log(data)
+                });
+            });
+        }
+
+        if(getMusicPath()){
+            startListMusic(getMusicPath())
+        }
+
+        function setMusic(filename) {
+            $('#current_music').html(filename);
+            $('#audio').attr('src',getMusicPath() + '/' +filename);
+        }
+
+        function getMusicPath() {
+            return window.localStorage.getItem('music_path')
+        }
 
     </script>
 
@@ -67,16 +96,66 @@
 
     <script src="./js/libs/socket.io.js"></script>
     <script>
+
         var socket = io.connect('http://localhost:3000');
         socket.on('test', function (data){
             console.log('服务端收到');
             console.log(data);
-//            if(audio.paused){
-//                audio.play();
-//                return;
-//            }
-//            audio.pause();
+            switch (data.order){
+                case 'play':
+                    console.log(data.value);
+                    playMusic(data.value);
+                    break;
+                case 'fast_ward':
+                    console.log(data.value);
+                    break;
+                case 'fast_back':
+                    console.log(data.value);
+                    break;
+            }
         });
+
+        function playMusic(orderValue) {
+            var audio = document.querySelector('#audio');
+            switch (orderValue){
+                case 'pp':
+                    if(audio.paused){
+                        audio.play();
+                    }else{
+                        audio.pause();
+                    }
+                    break;
+                case 'back':
+                    console.log(mCurrentIndex);
+                    if(mCurrentIndex == 0){
+                        mCurrentIndex = (mList.length - 1);
+                    }else{
+                        mCurrentIndex --;
+                    }
+                    console.log(mList[mCurrentIndex]);
+                    break;
+                case 'front':
+                    console.log(mCurrentIndex);
+                    if(mCurrentIndex == (mList.length - 1)){
+                        mCurrentIndex = 0;
+                    }else{
+                        mCurrentIndex ++;
+                    }
+                    console.log(mList[mCurrentIndex]);
+                    break;
+                case 'random':
+                    var random = getRandom(0,mList.length - 1);
+                    while (mCurrentIndex == random){
+                        random = getRandom(0,mList.length - 1);
+                    }
+                    mCurrentIndex = random;
+                    break;
+            }
+            //设置音乐
+            setMusic(mList[mCurrentIndex]);
+            //播放
+            audio.play();
+        }
     </script>
   </body>
 </html>
