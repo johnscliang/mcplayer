@@ -10,9 +10,14 @@
   </head>
   <body>
     <button type="button" id="start">选择一个文件夹</button>
-    <div style="height: 5em">
+    <div style="height: 8em">
+        <p>播放模式:
+            <input id="play_style_normal" checked type="radio" name="play_style" value="normal" />顺序
+            <input id="play_style_desc" type="radio" name="play_style" value="desc" />倒序
+            <input id="play_style_random" type="radio" name="play_style" value="random" />随机
+        </p>
         <p>当前音乐:<b id="current_music"></b></p>
-        <audio id="audio" controls/>
+        <audio id="audio" controls autoplay/>
     </div>
     <ul id="list">
         <li v-for="item in items">
@@ -23,6 +28,7 @@
     </ul>
     <script>
 
+        var mAudio = document.querySelector('#audio');
         var mList = [];//音乐
         var mCurrentIndex = 0;
 
@@ -116,13 +122,13 @@
         });
 
         function playMusic(orderValue) {
-            var audio = document.querySelector('#audio');
+
             switch (orderValue){
                 case 'pp':
-                    if(audio.paused){
-                        audio.play();
+                    if(mAudio.paused){
+                        mAudio.play();
                     }else{
-                        audio.pause();
+                        mAudio.pause();
                     }
                     break;
                 case 'back':
@@ -154,8 +160,26 @@
             //设置音乐
             setMusic(mList[mCurrentIndex]);
             //播放
-            audio.play();
+            mAudio.play();
         }
     </script>
+
+  <script>
+      mAudio.onended = function() {
+          var playstyle = $("input[name='play_style']:checked").val();
+          console.log(playstyle);
+          switch (playstyle){
+              case 'normal':
+                  playMusic('front');
+                  break;
+              case 'desc':
+                  playMusic('back');
+                  break;
+              case 'random':
+                  playMusic('random');
+                  break;
+          }
+      };
+  </script>
   </body>
 </html>
