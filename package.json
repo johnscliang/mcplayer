@@ -4,7 +4,8 @@
   "description": "A music palyer that counld be control by a H5 page online",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package": "electron-packager ./ zhihu --win --out zhihu --arch=x64 --version 1.3.4 --overwrite --ignore=node_modules"
   },
   "repository": "https://github.com/LanceCong/mcplayer",
   "keywords": [
@@ -15,8 +16,9 @@
   "author": "Lance",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^1.4.3"
-    ,"chokidar": "^1.5.1"
-    ,"mime-types": "^2.1.12"
+    "chokidar": "^1.5.1",
+    "electron": "^1.4.3",
+    "electron-packager": "^8.1.0",
+    "mime-types": "^2.1.12"
   }
 }
