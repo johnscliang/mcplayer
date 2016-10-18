@@ -30,7 +30,11 @@
     }
 
     $('.radio').change(function () {
-        console.log('change!')
+        var playstyle = $("input[name='play_style']:checked").val();
+        console.log(playstyle);
+        $.get('http://192.168.0.41:3000/setting/'+playstyle,function (data) {
+
+        })
     })
 </script>
 </html>
