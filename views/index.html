@@ -7,7 +7,11 @@
     <script src="js/libs/jquery.qrcode.min.js"></script>
     <script src="js/libs/vue.js"></script>
     <script src="js/utils/RandomUtil.js"></script>
-
+    <style type="text/css">
+        body{
+            overflow-x: hidden;
+        }
+    </style>
   </head>
   <body>
     <button type="button" id="start">选择一个文件夹</button>
@@ -22,7 +26,7 @@
 
         <p>播放模式:<span id="play_style">顺序</span></p>
         <p>当前音乐:<b id="current_music"></b></p>
-        <audio id="audio" controls autoplay/>
+        <audio id="audio" controls autoplay />
     </div>
     <ul id="list">
         <li v-for="item in items">
@@ -152,6 +156,7 @@
                     }else{
                         mAudio.pause();
                     }
+                    console.log(mAudio.paused)
                     break;
                 case 'back':
                     console.log(mCurrentIndex);
@@ -179,10 +184,14 @@
                     mCurrentIndex = random;
                     break;
             }
-            //设置音乐
-            setMusic(mList[mCurrentIndex]);
-            //播放
-            mAudio.play();
+            //如果不是暂停播放命令
+            if(orderValue != 'pp'){
+                //设置音乐
+                setMusic(mList[mCurrentIndex]);
+                //播放(不要是暂停命令)
+                mAudio.play();
+            }
+            
         }
     </script>
 

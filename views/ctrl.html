@@ -38,7 +38,7 @@
 <script>
     function send(token,order,value) {
 //        var url = 'http://localhost:3000/c/'+token+'/'+order+'/'+value;
-        var url = 'http://192.168.0.41:3000/c/'+token+'/'+order+'/'+value;
+        var url = 'http://'+window.location.host+'/c/'+token+'/'+order+'/'+value;
         console.log(url);
         $.get(url,function (data,st) {
             console.log(data)
@@ -48,7 +48,7 @@
     $('.radio').change(function () {
         var playstyle = $("input[name='play_style']:checked").val();
         console.log(playstyle);
-        $.get('http://192.168.0.41:3000/setting/'+playstyle,function (data) {
+        $.get('http://'+window.location.host+'/setting/'+playstyle,function (data) {
 
         })
     })
