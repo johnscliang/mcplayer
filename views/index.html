@@ -47,8 +47,13 @@
                         list.items = [];
                         files.forEach(function (file) {
                             list.items.push({fileName:file,basePath:choosedDir})
-                        })
+                        });
+                        //发送歌单给后台
+                        $.post('http://localhost:3000/saveList',{music_list:JSON.stringify(files)},function (data) {
+                            console.log(data)
+                        });
                     });
+
                 }else {
                     console.log("No path selected");
                 }

@@ -19,8 +19,10 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'')));//就是当前路径
 
 //socket连接
-io.on( "connection", function( socket ){
+io.on("connection", function( socket ){
     console.log( "一个新连接" );
+    global.socket = socket;
+    global.socket.emit('test', {order: '111' ,value:'23' });
 });
 
 http.listen(port,function(){
@@ -48,10 +50,31 @@ router.get('/c/:token/:order/:value', function(req, res) {
     var order = req.params.order;
     var value = req.params.value;
     //向展示端进行命令广播
-    io.sockets.emit(token, {order: order ,value:value });
+    global.socket.emit(token, {order: order ,value:value });
 
     res.json({
         c : 0
         ,info : 'send ok!'
+    })
+});
+
+global.music_list = [];//定义一个全局的数组
+//保存歌单列表
+router.post('/saveList', function(req, res) {
+    console.log('收到歌单');
+    console.log(JSON.stringify(req.body.music_list));
+    global.music_list = JSON.parse(req.body.music_list);
+    //向展示端进行命令广播
+    res.json({
+        c : 0
+        ,info : 'send ok!'
+    })
+});
+
+//获取
+router.all('/getList', function(req, res) {
+    //向展示端进行命令广播
+    res.json({
+        music_list : global.music_list
     })
 });
