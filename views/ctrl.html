@@ -11,17 +11,26 @@
 <button onclick="send('test','play','back')">上一首</button>
 <button onclick="send('test','play','front')">下一首</button>
 <button onclick="send('test','play','random')">随机播放一个</button>
-<button onclick="send('test','fast_frontward',23)">快进23s</button>
-<button onclick="send('test','fast_backward',30)">快退30s</button>
+<p>
+    播放模式:
+    <input id="play_style_normal" class="radio" checked type="radio" name="play_style" value="normal" />顺序
+    <input id="play_style_desc"class="radio" type="radio" name="play_style" value="desc" />倒序
+    <input id="play_style_random"class="radio" type="radio" name="play_style" value="random" />随机
+</p>
+
 </body>
 <script>
     function send(token,order,value) {
 //        var url = 'http://localhost:3000/c/'+token+'/'+order+'/'+value;
-        var url = 'http://192.168.0.41/:3000/c/'+token+'/'+order+'/'+value;
+        var url = 'http://192.168.0.41:3000/c/'+token+'/'+order+'/'+value;
         console.log(url);
         $.get(url,function (data,st) {
             console.log(data)
         });
     }
+
+    $('.radio').change(function () {
+        console.log('change!')
+    })
 </script>
 </html>

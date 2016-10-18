@@ -78,3 +78,14 @@ router.all('/getList', function(req, res) {
         music_list : global.music_list
     })
 });
+
+//设置
+router.get('/setting/:play_style', function(req, res) {
+    var play_style = req.params.play_style;
+    //向展示端进行命令广播
+    global.socket.emit('test', {order: 'setting' ,value:play_style });
+    res.json({
+        c : 0
+        ,info : 'send ok!'
+    })
+});
