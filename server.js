@@ -89,6 +89,17 @@ router.get('/setting/:play_style', function(req, res) {
     })
 });
 
+//设置音量,0~100
+router.get('/volume/:value', function(req, res) {
+    var value = req.params.value;
+    //向展示端进行命令广播
+    global.socket.emit('test', {order: 'volume' ,value:value });
+    res.json({
+        c : 0
+        ,info : 'volume set ok!'
+    })
+});
+
 //本机ip
 require('dns').lookup(require('os').hostname(), function (err, add, fam) {
     console.log('本机ip: '+add);

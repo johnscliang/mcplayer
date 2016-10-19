@@ -168,6 +168,10 @@
                             break;
                     }
                     break;
+                case 'volume':
+                    //设置声音大小
+                    mAudio.volume = (+data.value)/100;
+                    break
             }
         });
 
