@@ -43,6 +43,24 @@
         var mCurrentIndex = 0;
         var mPlayStyle = 'normal';
         var chokidar = require('chokidar');//监控文件夹变化
+        var dirscanReady = false;
+        function startWatch(chooesdDir) {
+            var watcher = chokidar.watch(chooesdDir, {
+                ignored: /[\/\\]\./,
+                persistent: true
+            });
+
+            watcher.on('ready',function () {
+                console.log('Initial scan complete. Ready for changes');
+                dirscanReady = true;
+            }).on('all',function (event,path) {
+                console.log(dirscanReady , 'all!');
+                console.log(event , path);
+                if(dirscanReady){
+                    startWork()
+                }
+            });
+        }
 
         var list = new Vue({
             el: '#list'
@@ -74,6 +92,7 @@
         });
 
         function startListMusic(choosedDir){
+            startWatch(choosedDir);
             $('#current_dir').html(choosedDir);
             fileUtil.getAudios(choosedDir,function (files) {
                 list.items = [];//清空
@@ -97,6 +116,7 @@
             if(getMusicPath()){
                 startListMusic(getMusicPath())
             }
+            dirscanReady = false;//重要
         }
 
         function setMusic(filename) {
