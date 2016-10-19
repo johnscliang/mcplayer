@@ -61,13 +61,12 @@ router.get('/c/:token/:order/:value', function(req, res) {
 global.music_list = [];//定义一个全局的数组
 //保存歌单列表
 router.post('/saveList', function(req, res) {
-    console.log('收到歌单');
-    console.log(JSON.stringify(req.body.music_list));
+    // console.log(JSON.stringify(req.body.music_list));
     global.music_list = JSON.parse(req.body.music_list);
     //向展示端进行命令广播
     res.json({
         c : 0
-        ,info : 'send ok!'
+        ,info : 'saveList ok!'
     })
 });
 
@@ -86,7 +85,7 @@ router.get('/setting/:play_style', function(req, res) {
     global.socket.emit('test', {order: 'setting' ,value:play_style });
     res.json({
         c : 0
-        ,info : 'send ok!'
+        ,info : 'setting ok!'
     })
 });
 

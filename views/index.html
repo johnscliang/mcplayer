@@ -25,6 +25,7 @@
     <div style="height: 8em">
 
         <p>播放模式:<span id="play_style">顺序</span></p>
+        <button onclick="startWork()">刷新歌单</button>
         <p>当前音乐:<b id="current_music"></b></p>
         <audio id="audio" controls autoplay />
     </div>
@@ -41,6 +42,7 @@
         var mList = [];//音乐
         var mCurrentIndex = 0;
         var mPlayStyle = 'normal';
+        var chokidar = require('chokidar');//监控文件夹变化
 
         var list = new Vue({
             el: '#list'
@@ -80,9 +82,6 @@
                 });
                 //设置第一首歌
                 var firstSong = files[0];
-                console.log('第一首歌');
-                console.log(choosedDir);
-                console.log(firstSong);
                 if(firstSong){
                     setMusic(firstSong)
                 }
@@ -94,8 +93,10 @@
             });
         }
 
-        if(getMusicPath()){
-            startListMusic(getMusicPath())
+        function startWork() {
+            if(getMusicPath()){
+                startListMusic(getMusicPath())
+            }
         }
 
         function setMusic(filename) {
@@ -107,6 +108,9 @@
             return window.localStorage.getItem('music_path')
         }
 
+        //开始工作
+        startWork();
+
     </script>
 
   <script src="../server.js"></script>
@@ -116,7 +120,7 @@
 
         var socket = io.connect('http://localhost:3000');
         socket.on('test', function (data){
-            console.log('服务端收到');
+            console.log('PC端页面收到');
             console.log(data);
             switch (data.order){
                 case 'play':
