@@ -100,6 +100,19 @@ router.get('/volume/:value', function(req, res) {
     })
 });
 
+//获取当前音频的时长和当前时间等属性
+router.get('/audio/prop', function(req, res) {
+    console.log(mAudio);
+    res.json({
+        c : 0
+        ,duration : mAudio.duration
+        ,currentTime : mAudio.currentTime
+        ,volume : mAudio.volume
+        ,readyState : mAudio.readyState
+        ,paused : mAudio.paused
+    })
+});
+
 //本机ip
 require('dns').lookup(require('os').hostname(), function (err, add, fam) {
     console.log('本机ip: '+add);
