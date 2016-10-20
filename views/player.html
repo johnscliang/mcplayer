@@ -14,12 +14,37 @@
 <body>
 
 <div style="text-align: center;padding-top: 8px;padding-bottom: 8px">
-    <span><img class="play_button" id="play_backward" src="imgs/icon_backward.png"/></span>
-    <span><img class="play_button" id="play_pause" src="imgs/icon_pause.png"/></span>
-    <span><img class="play_button" id="play_forward" src="imgs/icon_forward.png"/></span>
+    <span><img class="player_button" id="play_backward" src="imgs/icon_backward.png"/></span>
+    <span><img class="player_button" id="play_pause" src="imgs/icon_pause.png"/></span>
+    <span><img class="player_button" id="play_forward" src="imgs/icon_forward.png"/></span>
 </div>
 
-<input type="range" min="10" max="1000" step="10">
+<div style="padding: 12px;">
+    <span>正在播放：</span>
+    <span id="current_music_name">月亮代表我的心.mp3</span>
+</div>
+
+<div>
+    <input type="range" id="range_time" min="10" max="1000" step="10"/>
+</div>
+
+<div style="padding: 10px;vertical-align: middle">
+    <span id="current_time">00:04</span>
+    <span></span>
+    <span>/</span>
+    <span></span>
+    <span id="total_time">04:32</span>
+</div>
+
+<div>
+    <img class="player_button" src="imgs/icon_loop.png">
+    <img class="player_button" src="imgs/icon_loop.png">
+</div>
+
+<div>
+    <input type="range" id="range_volume" min="0" max="100" step="1"/>
+</div>
+
 
 <!-- jQuery library -->
 <script src="./js/libs/jquery-1.9.1.min.js"></script>

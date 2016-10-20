@@ -2,8 +2,22 @@ body{
     background: #376272;
 }
 
-.play_button{
+.player_button {
     width: 3em;
     height: 3em;
     padding: 8px;
 }
+
+
+/*.rangeslider--horizontal{*/
+    /*height: 10px !important;*/
+/*}*/
+
+/*.rangeslider__fill{*/
+    /*height: 10px !important;*/
+/*}*/
+
+/*.rangeslider__handle{*/
+    /*height: 10px !important;*/
+    /*width: 10px !important;*/
+/*}*/
