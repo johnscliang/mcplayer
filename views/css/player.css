@@ -1,0 +1,9 @@
+body{
+    background: #376272;
+}
+
+.play_button{
+    width: 3em;
+    height: 3em;
+    padding: 8px;
+}

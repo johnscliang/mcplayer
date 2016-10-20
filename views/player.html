@@ -7,18 +7,26 @@
     <meta content="telephone=no" name="format-detection" />
     <meta name="apple-mobile-web-app-capable" content="no" />
     <title>mcplayer播放器</title>
+    <link rel="stylesheet" href="./js/rangeslider/rangeslider.css">
     <link rel="stylesheet" href="./css/player.css">
 
 </head>
 <body>
 
+<div style="text-align: center;padding-top: 8px;padding-bottom: 8px">
+    <span><img class="play_button" id="play_backward" src="imgs/icon_backward.png"/></span>
+    <span><img class="play_button" id="play_pause" src="imgs/icon_pause.png"/></span>
+    <span><img class="play_button" id="play_forward" src="imgs/icon_forward.png"/></span>
+</div>
 
+<input type="range" min="10" max="1000" step="10">
 
 <!-- jQuery library -->
 <script src="./js/libs/jquery-1.9.1.min.js"></script>
-<script src="./js/player.js"></script>
-<script src="./js/utils/fileUtil.js"></script>
+<!--<script src="./js/utils/fileUtil.js"></script>-->
 <script src="./js/utils/RandomUtil.js"></script>
-
+<script src="./js/rangeslider/rangeslider.min.js"></script>
+<!--自定义脚本-->
+<script src="./js/player.js"></script>
 </body>
 </html>
