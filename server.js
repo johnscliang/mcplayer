@@ -73,9 +73,7 @@ router.post('/saveList', function(req, res) {
 //获取
 router.all('/getList', function(req, res) {
     //向展示端进行命令广播
-    res.json({
-        music_list : global.music_list
-    })
+    res.json(global.music_list)
 });
 
 //设置
@@ -103,6 +101,7 @@ router.get('/volume/:value', function(req, res) {
 //获取当前音频的时长和当前时间等属性
 router.get('/audio/prop', function(req, res) {
     console.log(mAudio);
+    var src = decodeURI(mAudio.src.toString().split('\/')[mAudio.src.toString().split('\/').length - 1]);
     res.json({
         c : 0
         ,duration : mAudio.duration
@@ -110,6 +109,7 @@ router.get('/audio/prop', function(req, res) {
         ,volume : mAudio.volume
         ,readyState : mAudio.readyState
         ,paused : mAudio.paused
+        ,src : src
     })
 });
 

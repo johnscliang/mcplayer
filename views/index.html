@@ -6,7 +6,7 @@
     <script src="js/libs/jquery-1.9.1.min.js"></script>
     <script src="js/libs/jquery.qrcode.min.js"></script>
     <script src="js/libs/vue.js"></script>
-    <script src="js/utils/RandomUtil.js"></script>
+    <script src="js/utils/CM.js"></script>
     <style type="text/css">
         body{
             overflow-x: hidden;
@@ -27,7 +27,7 @@
         <p>播放模式:<span id="play_style">顺序</span></p>
         <button onclick="startWork()">刷新歌单</button>
         <p>当前音乐:<b id="current_music"></b></p>
-        <audio id="audio" controls autoplay />
+        <audio id="audio" controls autoplay/>
     </div>
     <ul id="list">
         <li v-for="item in items">
@@ -39,6 +39,7 @@
     <script>
 
         var mAudio = document.querySelector('#audio');
+        mAudio.volume = 0.8;
         var mList = [];//音乐
         var mCurrentIndex = 0;
         var mPlayStyle = 'normal';
@@ -51,11 +52,11 @@
             });
 
             watcher.on('ready',function () {
-                console.log('Initial scan complete. Ready for changes');
+                //console.log('Initial scan complete. Ready for changes');
                 dirscanReady = true;
             }).on('all',function (event,path) {
-                console.log(dirscanReady , 'all!');
-                console.log(event , path);
+                //console.log(dirscanReady , 'all!');
+                //console.log(event , path);
                 if(dirscanReady){
                     startWork()
                 }

@@ -44,7 +44,7 @@
                 <div style="text-align: center">
                     <div style="text-align: center">
                         <div style="color: #707070">
-                            随机播放♫ ♬ ♩ ♭ ♪
+                            随机播放<span>♫ ♬ ♩ ♭ ♪</span>
                         </div>
                         <a class="button primary">切换</a>
                     </div>
@@ -65,9 +65,9 @@
 
     <div style="padding: 10px">
         <span style="color: #606060">音量：</span>
-        <span style="color: #838383">50/100</span>
+        <span style="color: #838383"><span id="voice">80</span>/100</span>
         <div style="margin-top: 15px"></div>
-        <input type="range" id="range_volume" min="0" max="100" step="1"/>
+        <input type="range" id="range_volume" value="80" min="0" max="100" step="1"/>
     </div>
 
 </div>
@@ -127,12 +127,21 @@
     <div>XXXXXXXXXXXXXXXXXX</div>
 </div>
 
+<div id="error_tips" hidden style="position: absolute;top: 0;z-index: 10;width: 100%;height: 100%;background: white">
+    Opps~电脑端没打开？<br/>
+    手机和电脑没有用同一个WiFi？
+    <br/>
+    <div style="text-align: center;margin-top: 5em">
+        <button style="height: 6em" onclick="window.location.reload()" class="button">点击刷新</button>
+    </div>
 
+</div>
 
 <!-- jQuery library -->
 <script src="./js/libs/jquery-1.9.1.min.js"></script>
+<script src="./js/libs/vue.js"></script>
 <!--<script src="./js/utils/fileUtil.js"></script>-->
-<script src="./js/utils/RandomUtil.js"></script>
+<script src="js/utils/CM.js"></script>
 <script src="plugs/rangeslider/rangeslider.min.js"></script>
 <script src="plugs/roundSlider/roundslider.min.js"></script>
 <!--自定义脚本-->
