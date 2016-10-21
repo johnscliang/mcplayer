@@ -43,13 +43,13 @@ router.get('/', function(req, res, next) {
     res.send('服务已启动');
 });
 
+//控制audio
 router.get('/c/:order/:value', function(req, res) {
-
     console.log(req.params);
     var order = req.params.order;
     var value = req.params.value;
-    
 
+    global.socket.emit('mcplayer', {order: order ,value:value });
 
     res.json({
         c : 0
@@ -58,39 +58,41 @@ router.get('/c/:order/:value', function(req, res) {
 });
 
 global.music_list = [];//定义一个全局的数组
-//保存歌单列表
+//更新歌单列表
 router.post('/saveList', function(req, res) {
-    // console.log(JSON.stringify(req.body.music_list));
     global.music_list = JSON.parse(req.body.music_list);
-    //向展示端进行命令广播
+
+    global.socket.emit('music_list', global.music_list);
+
     res.json({
         c : 0
-        ,info : 'saveList ok!'
+        ,info : 'update music_list ok!'
     })
+
 });
 
 //获取
 router.all('/getList', function(req, res) {
-    //向展示端进行命令广播
     res.json(global.music_list)
 });
 
-//设置
-router.get('/setting/:play_style', function(req, res) {
-    var play_style = req.params.play_style;
+//设置循环方式
+router.get('/setting/:play_mode', function(req, res) {
+    var play_mode = req.params.play_mode;
     //向展示端进行命令广播
-    global.socket.emit('test', {order: 'setting' ,value:play_style });
+    global.socket.emit('play_mode', {play_mode:play_mode });
     res.json({
         c : 0
-        ,info : 'setting ok!'
+        ,info : 'play_mode setting ok!'
     })
 });
 
 //设置音量,0~100
 router.get('/volume/:value', function(req, res) {
     var value = req.params.value;
-    //向展示端进行命令广播
-    global.socket.emit('test', {order: 'volume' ,value:value });
+
+    global.socket.emit('volume', {value:value});
+
     res.json({
         c : 0
         ,info : 'volume set ok!'
@@ -118,6 +120,9 @@ router.get('/audio/setCurrentTime/:second', function(req, res) {
     if(second){
         mAudio.currentTime = second;
     }
+
+    global.socket.emit('setCurrentTime', {second:second});
+
     res.json({
         c : 0
         ,currentTime : mAudio.currentTime

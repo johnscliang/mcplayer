@@ -140,7 +140,7 @@
     <script>
 
         var socket = io.connect('http://localhost:3000');
-        socket.on('test', function (data){
+        socket.on('mcplayer', function (data){
             console.log('PC端页面收到');
             console.log(data);
             switch (data.order){

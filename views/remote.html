@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-touch-fullscreen" content="no" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="apple-mobile-web-app-capable" content="no" />
+    <title>mcplayer播放器</title>
+    <link rel="stylesheet" href="./plugs/rangeslider/rangeslider.css">
+    <link rel="stylesheet" href="./css/gh-buttons.css">
+    <link rel="stylesheet" href="./plugs/roundSlider/roundslider.min.css">
+    <link rel="stylesheet" href="./plugs/roundSlider/roundslider_custom.css">
+    <link rel="stylesheet" href="./css/player.css">
+
+</head>
+<body>
+
+<div id="main_div">
+    <!--♫ ♬ ♩ ♭ ♪-->
+    <div style="text-align: center;background: deeppink;color: white;height: 2.5em;line-height : 2.5em;">
+        <b>Mcplayer ♪</b>
+        <a id="go2list" style="position: absolute;right: 1em;top: 0.5em;" class="button">歌单</a>
+    </div>
+
+    <div style="padding: 12px;">
+        <span style="color: #999999;max-lines: 1" class="words" id="current_music_name">|</span>
+    </div>
+
+    <div style="color: #606060;font-size: 1em;padding-left: 10px;padding-bottom: 10px">
+        <span id="current_time">00:04</span>
+        <span></span>
+        <span>/</span>
+        <span></span>
+        <span id="total_time">04:32</span>
+    </div>
+
+    <table>
+        <tr>
+            <td style="padding-left: 20px">
+                <div id="music_progress"></div>
+            </td>
+            <td style="width: 100%">
+                <div style="text-align: center">
+                    <div style="text-align: center">
+                        <div style="color: #707070">
+                            随机播放<span>♫</span>
+                        </div>
+                        <a class="button primary">切换</a>
+                    </div>
+                    <br/>
+                    <div>
+                        <ul class="button-group">
+                            <a href="#" style="width: 2em" class="button primary pill">|<</a>
+                            <a href="#" style="width: 2em;" class="button primary pill">播放</a>
+                            <a href="#" style="width: 2em" class="button primary pill"> >| </a>
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <br/>
+
+    <div style="padding: 10px">
+        <span style="color: #606060">音量：</span>
+        <span style="color: #838383"><span id="voice"></span>/100</span>
+        <div style="margin-top: 15px"></div>
+        <input type="range" id="range_volume" value="80" min="0" max="100" step="1"/>
+    </div>
+
+</div>
+
+
+<div id="music_list" style="display: none">
+    <div style="position: fixed;width:100%;text-align: center;background: deeppink;color: white;height: 2.5em;line-height : 2.5em;">
+        <a id="back2main" style="position: absolute;right: 1em;top: 0.5em;" class="button">返回</a>
+        <b>音乐列表 ♫</b>
+    </div>
+    <div style="margin-top: 2.5em"></div>
+    <div>111111111111111111</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+</div>
+
+<div id="error_tips" hidden style="position: absolute;top: 0;z-index: 10;width: 100%;height: 100%;background: white">
+    Opps~电脑端没打开？<br/>
+    手机和电脑没有用同一个WiFi？
+    <br/>
+    <div style="text-align: center;margin-top: 5em">
+        <button style="height: 6em" onclick="window.location.reload()" class="button">点击刷新</button>
+    </div>
+
+</div>
+
+<!-- jQuery library -->
+<script src="./js/libs/jquery-1.9.1.min.js"></script>
+<script src="./js/libs/vue.js"></script>
+<!--<script src="./js/utils/fileUtil.js"></script>-->
+<script src="js/utils/CM.js"></script>
+<script src="plugs/rangeslider/rangeslider.min.js"></script>
+<script src="plugs/roundSlider/roundslider.min.js"></script>
+<!--自定义脚本-->
+<script src="./js/player.js"></script>
+
+</body>
+</html>
