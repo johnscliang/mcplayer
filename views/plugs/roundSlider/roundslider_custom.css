@@ -1,0 +1,21 @@
+#music_progress .rs-range-color  {
+    background-color: #33B5E5;
+}
+#music_progress .rs-path-color  {
+    background-color: #C2E9F7;
+}
+#music_progress .rs-handle  {
+    background-color: #C2E9F7;
+    padding: 7px;
+    border: 2px solid #C2E9F7;
+}
+#music_progress .rs-handle.rs-focus  {
+    border-color: #33B5E5;
+}
+#music_progress .rs-handle:after  {
+    border-color: #33B5E5;
+    background-color: #33B5E5;
+}
+#music_progress .rs-border  {
+    border-color: transparent;
+}

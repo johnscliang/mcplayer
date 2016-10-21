@@ -1,23 +1,41 @@
-body{
-    background: #376272;
+html, body {
+    background: lightpink;
+    height:100%;
+    margin:0;
+    padding:0
 }
 
 .player_button {
-    width: 3em;
-    height: 3em;
-    padding: 8px;
+    width: 2em;
+    height: 2em;
+    padding: 2px;
 }
 
+.words{
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    width: 100%;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
 
-/*.rangeslider--horizontal{*/
-    /*height: 10px !important;*/
-/*}*/
+#main_div {
+    width:100%;
+    position:absolute;
+    z-index:5;
+    top:0;
+}
 
-/*.rangeslider__fill{*/
-    /*height: 10px !important;*/
-/*}*/
-
-/*.rangeslider__handle{*/
-    /*height: 10px !important;*/
-    /*width: 10px !important;*/
-/*}*/
+#music_list{
+    background:#FC0;
+    width:100%;
+    overflow:auto;
+    top:0px;
+    position:absolute;
+    z-index:10;
+    bottom:0px;
+}
