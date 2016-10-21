@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname,'')));//就是当前路径
 io.on("connection", function( socket ){
     console.log( "一个新连接" );
     global.socket = socket;
-    global.socket.emit('test', {order: '111' ,value:'23' });
+    // global.socket.emit('test', {order: '111' ,value:'23' });
 });
 
 http.listen(port,function(){
@@ -43,14 +43,13 @@ router.get('/', function(req, res, next) {
     res.send('服务已启动');
 });
 
-router.get('/c/:token/:order/:value', function(req, res) {
+router.get('/c/:order/:value', function(req, res) {
 
     console.log(req.params);
-    var token = req.params.token;
     var order = req.params.order;
     var value = req.params.value;
-    //向展示端进行命令广播
-    global.socket.emit(token, {order: order ,value:value });
+    
+
 
     res.json({
         c : 0
