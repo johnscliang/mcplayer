@@ -106,7 +106,7 @@ router.get('/audio/prop', function(req, res) {
         c : 0
         ,duration : mAudio.duration
         ,currentTime : mAudio.currentTime
-        ,volume : mAudio.volume
+        ,volume : mAudio.volume * 100
         ,readyState : mAudio.readyState
         ,paused : mAudio.paused
         ,src : src

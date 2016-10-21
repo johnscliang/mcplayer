@@ -12,6 +12,9 @@ function init(callback) {
                 if(st == 'success'){
                     mAudioInfo = audioInfo;
                     mMusicList = musicList;
+                    //
+                    mAudioInfo.duration = parseInt(audioInfo.duration);
+                    mAudioInfo.currentTime = parseInt(audioInfo.currentTime);
                     callback(true)
                 }else{
                     callback(false)
@@ -44,6 +47,8 @@ $(function () {
     init(function (ok) {
         if(ok){
             //设置音乐信息
+            $('input[type="range"]').val(mAudioInfo.volume).change();//音量
+            $('#voice').html(mAudioInfo.volume);
             $('#current_music_name').html(mAudioInfo.src);
             $('#total_time').html(formatSeconds(mAudioInfo.duration));
             $('#current_time').html(formatSeconds(mAudioInfo.currentTime));
@@ -89,7 +94,11 @@ $(function () {
 $('#range_volume').rangeslider({
     polyfill:false
     ,onSlideEnd: function(position, value) {
-        $('#voice').html(value)
+        $('#voice').html(value);
+        //设置音量
+        $.get('/volume/'+value,function (data,st) {
+
+        })
     }
 });
 
@@ -108,7 +117,13 @@ $("#music_progress").roundSlider({
 
 $("#music_progress").on("change", function (e) {
     console.log(e.value);
-    console.log($("#music_progress").roundSlider('getValue'))
+    console.log($("#music_progress").roundSlider('getValue'));
+    //设置远程，成功之后继续
+    //换算成秒数，
+    var musicValue = (e.value * mAudioInfo.duration) / 360;
+    mAudioInfo.currentTime = parseInt(musicValue);
+    $('#current_time').html(formatSeconds(mAudioInfo.currentTime));
+
 });
 
 
