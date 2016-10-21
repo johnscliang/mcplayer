@@ -113,6 +113,18 @@ router.get('/audio/prop', function(req, res) {
     })
 });
 
+//设置音乐进度
+router.get('/audio/setCurrentTime/:second', function(req, res) {
+    var second = req.params.second;
+    if(second){
+        mAudio.currentTime = second;
+    }
+    res.json({
+        c : 0
+        ,currentTime : mAudio.currentTime
+    })
+});
+
 //本机ip
 require('dns').lookup(require('os').hostname(), function (err, add, fam) {
     console.log('本机ip: '+add);

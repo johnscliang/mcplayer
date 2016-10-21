@@ -28,6 +28,9 @@ function init(callback) {
 
 //自动更新滑动条的函数
 function updateMusicProgress() {
+    if(mAudioInfo.paused){
+        return;
+    }
     setTimeout(function () {
         var currentValue = $("#music_progress").roundSlider('getValue');
         var newValue = currentValue + mMusicStep;
@@ -94,10 +97,9 @@ $(function () {
 $('#range_volume').rangeslider({
     polyfill:false
     ,onSlideEnd: function(position, value) {
-        $('#voice').html(value);
         //设置音量
         $.get('/volume/'+value,function (data,st) {
-
+            $('#voice').html(value);
         })
     }
 });
@@ -116,13 +118,20 @@ $("#music_progress").roundSlider({
 });
 
 $("#music_progress").on("change", function (e) {
-    console.log(e.value);
-    console.log($("#music_progress").roundSlider('getValue'));
-    //设置远程，成功之后继续
+    // console.log(e.value);
+    // console.log($("#music_progress").roundSlider('getValue'));
     //换算成秒数，
-    var musicValue = (e.value * mAudioInfo.duration) / 360;
-    mAudioInfo.currentTime = parseInt(musicValue);
-    $('#current_time').html(formatSeconds(mAudioInfo.currentTime));
+    var musicValue = parseInt((e.value * mAudioInfo.duration) / 360);
+    //设置远程，成功之后继续
+    $.get('/audio/setCurrentTime/'+musicValue,function (data,st) {
+        mAudioInfo.currentTime = parseInt(musicValue);
+        $('#current_time').html(formatSeconds(mAudioInfo.currentTime));
+    })
+
+
+
+
+
 
 });
 
