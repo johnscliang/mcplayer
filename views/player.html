@@ -8,7 +8,6 @@
     <meta name="apple-mobile-web-app-capable" content="no" />
     <title>mcplayer播放器</title>
     <link rel="stylesheet" href="./plugs/rangeslider/rangeslider.css">
-    <link rel="stylesheet" href="./plugs/nouislider/nouislider.min.css">
     <link rel="stylesheet" href="./css/gh-buttons.css">
     <link rel="stylesheet" href="./plugs/roundSlider/roundslider.min.css">
     <link rel="stylesheet" href="./plugs/roundSlider/roundslider_custom.css">
@@ -21,7 +20,7 @@
 
     <div style="text-align: center;background: deeppink;color: white;height: 2.5em;line-height : 2.5em;">
         <b>Mcplayer</b>
-        <a style="position: absolute;right: 1em;top: 0.5em;" class="button">歌单</a>
+        <a id="go2list" style="position: absolute;right: 1em;top: 0.5em;" class="button">歌单</a>
     </div>
 
     <div style="padding: 12px;">
@@ -45,16 +44,16 @@
                 <div style="text-align: center">
                     <div style="text-align: center">
                         <div style="color: #707070">
-                            随机播放
+                            随机播放♫ ♬ ♩ ♭ ♪
                         </div>
-                        <a class="button primary">[]</a>
+                        <a class="button primary">切换</a>
                     </div>
                     <br/>
                     <div>
                         <ul class="button-group">
-                            <li><a href="#" style="width: 2em" class="button primary pill">|<</a></li>
-                            <li><a href="#" style="width: 2em;" class="button primary pill">||</a></li>
-                            <li><a href="#" style="width: 2em" class="button primary pill"> >| </a></li>
+                            <a href="#" style="width: 2em" class="button primary pill">|<</a>
+                            <a href="#" style="width: 2em;" class="button primary pill">播放</a>
+                            <a href="#" style="width: 2em" class="button primary pill"> >| </a>
                         </ul>
                     </div>
                 </div>
@@ -74,11 +73,42 @@
 </div>
 
 
-<div id="music_list" style="display: block">
-    <div style="text-align: center;background: deeppink;color: white;height: 2.5em;line-height : 2.5em;">
-        <a style="position: absolute;left: 1em;top: 0.5em;" class="button">返回</a>
+<div id="music_list" style="display: none">
+    <div style="position: fixed;width:100%;text-align: center;background: deeppink;color: white;height: 2.5em;line-height : 2.5em;">
+        <a id="back2main" style="position: absolute;left: 1em;top: 0.5em;" class="button">返回</a>
         <b>Mcplayer</b>
     </div>
+    <div style="margin-top: 2.5em"></div>
+    <div>111111111111111111</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div>XXXXXXXXXXXXXXXXXX</div>
     <div>XXXXXXXXXXXXXXXXXX</div>
     <div>XXXXXXXXXXXXXXXXXX</div>
     <div>XXXXXXXXXXXXXXXXXX</div>
@@ -104,7 +134,6 @@
 <!--<script src="./js/utils/fileUtil.js"></script>-->
 <script src="./js/utils/RandomUtil.js"></script>
 <script src="plugs/rangeslider/rangeslider.min.js"></script>
-<script src="plugs/nouislider/nouislider.min.js"></script>
 <script src="plugs/roundSlider/roundslider.min.js"></script>
 <!--自定义脚本-->
 <script src="./js/player.js"></script>

@@ -17,7 +17,8 @@ $('#range_volume').rangeslider({
 });
 
 
-//音乐进程
+//音乐进程:
+//文档：http://roundsliderui.com/document.html
 $("#music_progress").roundSlider({
     radius: 70
     ,width: 8
@@ -31,4 +32,23 @@ $("#music_progress").roundSlider({
 
 $("#music_progress").on("change", function (e) {
     console.log(e.value);
+    console.log($("#music_progress").roundSlider('getValue'))
 });
+
+
+//用$.fadeIn()之类来切换菜单
+$('#go2list').click(function () {
+   $('#music_list').fadeIn();
+});
+$('#back2main').click(function () {
+    $('#music_list').fadeOut();
+});
+
+
+
+
+
+
+
+
+//服务端
