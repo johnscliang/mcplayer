@@ -152,3 +152,36 @@ socket.on('setting', function (data){
             break;
     }
 });
+
+
+
+
+
+
+
+
+
+//vue
+var vueMusicList = new Vue({
+    el: '#music_list',
+    data: {
+        music_list: []
+    }
+    ,methods:{
+        check_music:function (index) {
+            // console.log(index)
+            //切换音乐
+            $.get(basePath+'/ctrl/audio/currentIndex/'+index,function (data,st) {
+                $('#back2main').click()
+            })
+        }
+    }
+});
+//获取最新列表
+function getNewMusicList() {
+    $.get(basePath+'/res/get_music_list',function (data,st) {
+        vueMusicList.music_list = data;
+    });
+}
+
+getNewMusicList();

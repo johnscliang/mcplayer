@@ -175,7 +175,6 @@ var vueMusicList = new Vue({
 //获取最新列表
 function getNewMusicList() {
     $.get('/res/get_music_list',function (data,st) {
-        console.log(data);
         vueMusicList.music_list = data;
     });
 }

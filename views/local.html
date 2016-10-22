@@ -87,20 +87,16 @@
 
 </div>
 
-
 <div id="music_list" style="display: none">
     <div style="position: fixed;width:100%;text-align: center;background: deeppink;color: white;height: 2.5em;line-height : 2.5em;">
         <a id="back2main" style="position: absolute;right: 1em;top: 0.5em;" class="button">返回</a>
         <b>音乐列表 ♫</b>
     </div>
-    <div style="margin-top: 2.5em"></div>
-    <ul id="list">
-        <li v-for="item in items">
-            <div @click="checkout(item)">
-                {{ item.fileName }}
-            </div>
-        </li>
-    </ul>
+    <div style="margin-top: 2.5em;padding: 10px">
+        <div v-for="item in music_list" class="music_item" @click="check_music($index)">
+            <b class="words">{{$index+1}}.{{item}}</b>
+        </div>
+    </div>
 </div>
 
 <!--嵌入服务端的组件-->
