@@ -110,7 +110,7 @@ socket.on('event', function (data){
             //TODO 请求新歌单
             break;
         case 'update_ui':
-            console.log('远程端收到更新');
+            // console.log('远程端收到更新');
             $('#total_time').html(formatSeconds(data.d.duration));
             $('#current_time').html(formatSeconds(data.d.currentTime));
             if(!mMusicProgressDragging){//如果没有被拉着
@@ -144,6 +144,7 @@ socket.on('setting', function (data){
         case 'volume':
             //音量设置
             $('#voice').html(data.d);
+            $('input[type="range"]').val(data.d).change();//音量
             //重新获取音乐信息
             break;
     }

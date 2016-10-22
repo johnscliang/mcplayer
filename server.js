@@ -4,23 +4,35 @@ var mList = [];//音乐
 var mCurrentIndex = 0;
 var mPlayMode = 'normal';//normal random
 var chokidar = require('chokidar');//监控文件夹变化
-var dirscanReady = false;
+
 function startWatch(chooesdDir) {
     var watcher = chokidar.watch(chooesdDir, {
         ignored: /[\/\\]\./,
         persistent: true
     });
-
+    var ready = false;
     watcher.on('ready',function () {
-        //console.log('Initial scan complete. Ready for changes');
-        dirscanReady = true;
+        console.log('Initial scan complete. Ready for changes');
+        ready = true;
     }).on('all',function (event,path) {
-        //console.log(dirscanReady , 'all!');
-        //console.log(event , path);
-        if(dirscanReady){
-            startWork()
+        console.log(event , path);
+        if(ready){
+            startWork();//有变化，重新开始
         }
     });
+}
+
+function startWork(path) {
+    console.log('startWork()');
+    if(path == undefined){
+        path = getMusicPath();
+        if(path){
+            startWork(path)
+        }
+    }else{
+        window.localStorage.setItem('music_path',path);
+        startListMusic(path)
+    }
 }
 
 var fileUtil = require('./js/utils/fileUtil');
@@ -31,8 +43,7 @@ $('#start').click(function () {
         properties: ['openDirectory']
     },function(path){
         if(path){
-            window.localStorage.setItem('music_path',path.toString());
-            startListMusic(path.toString())
+            startWork(path.toString());
         }else {
             console.log("No path selected");
         }
@@ -56,13 +67,6 @@ function startListMusic(choosedDir){
     });
 }
 
-function startWork() {
-    if(getMusicPath()){
-        startListMusic(getMusicPath())
-    }
-    dirscanReady = false;//重要
-}
-
 function setMusic(filename) {
     $('#current_music').html(filename);
     $('#audio').attr('src',getMusicPath() + '/' +filename);
@@ -72,8 +76,8 @@ function getMusicPath() {
     return window.localStorage.getItem('music_path')
 }
 
-//开始工作
-// startWork();
+startWork();
+
 
 //事件====================EVENT===================
 mAudio.onended = function() {
@@ -88,7 +92,7 @@ mAudio.onended = function() {
 };
 //监听暂停事件
 mAudio.addEventListener('pause',function () {
-    global.socket.emit('event', {name : 'update_bt' ,d : {
+    io.emit('event', {name : 'update_bt' ,d : {
         paused : mAudio.paused
     }});
 });
@@ -107,7 +111,7 @@ function updateUI() {
     console.log('updateUI');
     var audioSrc = mAudio.src.toString().split('\/');
     var src = decodeURI(audioSrc[audioSrc.length - 1]);
-    global.socket.emit('event', {name : 'update_ui' ,d : {
+    io.emit('event', {name : 'update_ui' ,d : {
         duration : mAudio.duration
         ,currentTime : mAudio.currentTime
         ,music_progress_value : (mAudio.currentTime * 360)/mAudio.duration
@@ -150,7 +154,6 @@ app.use(express.static(path.join(__dirname,'')));//就是当前路径
 //socket连接
 io.on("connection", function( socket ){
     console.log( "一个新连接" );
-    global.socket = socket;
 });
 
 http.listen(port,function(){
@@ -223,7 +226,6 @@ router.get('/ctrl/audio/currentTime/:value', function(req, res) {
     if(musicValue){
         mAudio.currentTime = musicValue;
     }
-    // global.socket.emit('event', {name : 'setCurrentTime' ,d : musicValue });
     res.json({
         c : 0
         ,currentTime : mAudio.currentTime
@@ -234,7 +236,7 @@ router.get('/ctrl/audio/currentIndex/:index', function(req, res) {
     mCurrentIndex = req.params.index;
     setMusic(mList[mCurrentIndex]);
     mAudio.play();
-    global.socket.emit('event', {name : 'check_index' ,d : mCurrentIndex });
+    io.emit('event', {name : 'check_index' ,d : mCurrentIndex });
     res.json({
         c : 0
     })
@@ -242,7 +244,7 @@ router.get('/ctrl/audio/currentIndex/:index', function(req, res) {
 
 //通知更新歌单列表
 router.get('/event/refresh_music_list', function(req, res) {
-    global.socket.emit('event', {name:'refresh_music_list',d:mList});
+    io.emit('event', {name:'refresh_music_list',d:mList});
     res.json({
         c : 0
         ,info : 'update music_list!'
@@ -254,7 +256,7 @@ router.get('/setting/play_mode/:play_mode', function(req, res) {
     var play_mode = req.params.play_mode;
     //normal random
     //通知UI改变
-    global.socket.emit('setting', {name:'play_mode',d:play_mode });
+    io.emit('setting', {name:'play_mode',d:play_mode });
     mPlayMode = play_mode;
     res.json({
         c : 0
@@ -266,7 +268,7 @@ router.get('/setting/play_mode/:play_mode', function(req, res) {
 router.get('/setting/volume/:value', function(req, res) {
     var value = req.params.value;
     mAudio.volume = value/100;
-    global.socket.emit('setting', {name:'volume',d:value});
+    io.emit('setting', {name:'volume',d:value});
     res.json({
         c : 0
         ,info : 'volume set ok!'
@@ -306,6 +308,3 @@ require('dns').lookup(require('os').hostname(), function (err, add, fam) {
         text: address //任意内容
     });
 });
-
-//开始工作
-startWork();
