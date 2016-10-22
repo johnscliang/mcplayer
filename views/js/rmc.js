@@ -149,3 +149,10 @@ socket.on('setting', function (data){
             break;
     }
 });
+
+
+
+
+
+
+//vue

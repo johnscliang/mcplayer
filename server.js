@@ -81,14 +81,20 @@ startWork();
 
 //事件====================EVENT===================
 mAudio.onended = function() {
-    // switch (mPlayMode){
-    //     case 'normal':
-    //         playMusic('front');
-    //         break;
-    //     case 'random':
-    //         playMusic('random');
-    //         break;
-    // }
+    switch (mPlayMode){
+        case 'normal':
+            mCurrentIndex = (mCurrentIndex == mList.length-1 ? 0 :(mCurrentIndex+1));
+            break;
+        case 'random':
+            var random = getRandom(0,mList.length - 1);
+            while (mCurrentIndex == random){
+                random = getRandom(0,mList.length - 1);
+            }
+            mCurrentIndex = random;
+            break;
+    }
+    setMusic(mList[mCurrentIndex]);
+    mAudio.play();
 };
 //监听暂停事件
 mAudio.addEventListener('pause',function () {
