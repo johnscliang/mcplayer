@@ -62,9 +62,9 @@ $('#play_back').click(function () {
 $('#play_or_pause').click(function () {
     var order;
     if($(this).html() == '暂停'){
-        order = 'pause'
+        order = 'pause';
     }else{
-        order = 'play'
+        order = 'play';
     }
     $.get(basePath+'/ctrl/play/'+order,function (data,st) {
 
@@ -89,7 +89,7 @@ var socket = io.connect(basePath);
 // var socket = io.connect('http://localhost:3000');
 //事件
 socket.on('event', function (data){
-    console.log('event',data.name);
+    console.log('event',data.name,data.order);
     //console.log(data);
     switch (data.name){
         case 'play'://播放事件，上一首，下一首，暂停/播放
@@ -107,6 +107,10 @@ socket.on('event', function (data){
             $('#play_mode').html(data.d.play_mode == 'normal' ? '顺序播放':'随机播放');
             $('#play_or_pause').html(data.d.paused ? '播放':'暂停');
             $('#current_music_name').html(data.d.src);
+            break;
+        case 'update_bt'://暂停事件
+            console.log(data.d.paused);
+            $('#play_or_pause').html(data.d.paused ? '播放':'暂停');
             break;
     }
 });

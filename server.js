@@ -77,15 +77,31 @@ function getMusicPath() {
 
 //事件====================EVENT===================
 mAudio.onended = function() {
-    switch (mPlayMode){
-        case 'normal':
-            playMusic('front');
-            break;
-        case 'random':
-            playMusic('random');
-            break;
-    }
+    // switch (mPlayMode){
+    //     case 'normal':
+    //         playMusic('front');
+    //         break;
+    //     case 'random':
+    //         playMusic('random');
+    //         break;
+    // }
 };
+
+mAudio.pause = function() {
+    console.log('暂停事件');
+    // global.socket.emit('event', {name : 'update_bt' ,d : {
+    //     paused : mAudio.paused
+    // }});
+    // switch (mPlayMode){
+    //     case 'normal':
+    //         playMusic('front');
+    //         break;
+    //     case 'random':
+    //         playMusic('random');
+    //         break;
+    // }
+};
+
 //开始播放时
 mAudio.addEventListener('play',function () {
    //
@@ -203,8 +219,6 @@ router.get('/ctrl/play/:order', function(req, res) {
         //播放(不要是暂停命令)
         mAudio.play();
     }
-    //通知大家切换音乐了
-    global.socket.emit('event', {name : 'play' ,d : order });
     //
     res.json({
         c : 0
