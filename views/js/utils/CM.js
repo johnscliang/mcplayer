@@ -11,6 +11,9 @@ function getRandom(min, max){
 //秒数转换分秒
 function formatSeconds(value) {
     var second = parseInt(value);// 秒
+    if(isNaN(second)){
+        return '00:00';
+    }
     var minute = 0;// 分
     var hour = 0;// 小时
     if(second >= 60) {
