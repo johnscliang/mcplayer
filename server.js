@@ -50,7 +50,7 @@ function startListMusic(choosedDir){
         }
         mList = files;//放到全局
         //通知更新歌单
-        $.get('/event/refresh_music_list',function (data) {
+        $.get('http://127.0.0.1:3000/event/refresh_music_list',function (data) {
             console.log(data)
         });
     });
@@ -86,6 +86,15 @@ mAudio.onended = function() {
             break;
     }
 };
+//开始播放时
+mAudio.addEventListener('play',function () {
+   //
+    console.log('mAudioInfo',mAudioInfo);
+    if(!mAudioInfo){
+        console.log('第一次播放');
+        refreshUI();
+    }
+});
 
 
 
@@ -253,7 +262,7 @@ router.all('/res/get_music_list', function(req, res) {
 
 //获取当前音频的时长和当前时间等属性
 router.get('/res/get_audio_prop', function(req, res) {
-    console.log(mAudio);
+    // console.log(mAudio);
     var src = decodeURI(mAudio.src.toString().split('\/')[mAudio.src.toString().split('\/').length - 1]);
     res.json({
         c : 0
@@ -270,11 +279,13 @@ router.get('/res/get_audio_prop', function(req, res) {
 //本机ip
 require('dns').lookup(require('os').hostname(), function (err, add, fam) {
     console.log('本机ip: '+add);
+    var address = 'http://'+add+':3000/remote.html';
+    $('#controller_address').html(address);
     $("#qrcode").qrcode({
-        render: "table", //table方式
-        width: 100, //宽度
-        height:100, //高度
-        text: 'http://'+add+':3000/ctrl.html' //任意内容
+        render: "canvas", //table方式
+        width: 120, //宽度
+        height:120, //高度
+        text: address //任意内容
     });
 });
 

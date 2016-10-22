@@ -1,14 +1,17 @@
 /**
  * Created by admin on 2016/10/20.
  */
+var mHost = window.location.host;
+var basePath = 'http://'+(mHost == '' ? '127.0.0.1':mHost)+':3000';
 var mAudioInfo;
 var mMusicList;
 var mMusicStep;
 
 function init(callback) {
-    $.get('/audio/prop',function (audioInfo,st) {
-        if(st == 'success'){
-            $.get('/getList',function (musicList,st) {
+    $.get(basePath+'/res/get_audio_prop',function (audioInfo,st) {
+        if(st == 'success' && audioInfo.duration > 0){
+            console.log('init->duration:',audioInfo.duration);
+            $.get(basePath+'/res/get_music_list',function (musicList,st) {
                 if(st == 'success'){
                     mAudioInfo = audioInfo;
                     mMusicList = musicList;
@@ -47,13 +50,14 @@ function updateMusicProgress() {
 }
 
 function refreshUI() {
+    console.log('执行refreshUI()');
     init(function (ok) {
         if(ok){
             //设置音乐信息
             $('input[type="range"]').val(mAudioInfo.volume).change();//音量
             $('#voice').html(mAudioInfo.volume);
             $('#play_mode').html(mAudioInfo.play_mode == 'normal' ? '顺序播放':'随机播放');
-            $('#play_or_pause').html(mAudioInfo.paused ? '播放':'暂停');
+            $('#play_or_pause').html(mAudioInfo.paused ? '暂停':'播放');
             $('#current_music_name').html(mAudioInfo.src);
             $('#total_time').html(formatSeconds(mAudioInfo.duration));
             $('#current_time').html(formatSeconds(mAudioInfo.currentTime));
@@ -69,14 +73,19 @@ function refreshUI() {
 }
 
 $(function () {
-    refreshUI()
+    console.log('host',mHost);
+    if(!isNullOrEmpty(mHost)){
+        refreshUI()
+    }
+    //
 });
+
 //手动音量控制
 $('#range_volume').rangeslider({
     polyfill:false
     ,onSlideEnd: function(position, value) {
         //设置音量
-        $.get('/setting/volume/'+value,function (data,st) {
+        $.get(basePath+'/setting/volume/'+value,function (data,st) {
             //$('#voice').html(value);
         })
     }
@@ -99,7 +108,7 @@ $("#music_progress").on("change", function (e) {
     //换算成秒数，
     var musicValue = parseInt((e.value * mAudioInfo.duration) / 360);
     //设置远程，成功之后继续
-    $.get('/ctrl/audio/currentTime/'+musicValue,function (data,st) {
+    $.get(basePath+'/ctrl/audio/currentTime/'+musicValue,function (data,st) {
         //mAudioInfo.currentTime = parseInt(musicValue);
         //$('#current_time').html(formatSeconds(mAudioInfo.currentTime));
     })
@@ -113,14 +122,14 @@ $('#back2main').click(function () {
 });
 //下一首
 $('#play_next').click(function () {
-    $.get('/ctrl/play/next',function (data,st) {
-        refreshUI()
+    $.get(basePath+'/ctrl/play/next',function (data,st) {
+
     })
 });
 //上一首
 $('#play_back').click(function () {
-    $.get('/ctrl/play/back',function (data,st) {
-        refreshUI()
+    $.get(basePath+'/ctrl/play/back',function (data,st) {
+
     })
 });
 //播放/暂停
@@ -131,8 +140,8 @@ $('#play_or_pause').click(function () {
     }else{
         order = 'pause'
     }
-    $.get('/ctrl/play/'+order,function (data,st) {
-        refreshUI()
+    $.get(basePath+'/ctrl/play/'+order,function (data,st) {
+
     })
 });
 //切换模式
@@ -143,14 +152,14 @@ $('#check_mode').click(function () {
     }else {
         play_mode = 'random'
     }
-    $.get('/setting/play_mode/'+play_mode,function (data,st) {
-        refreshUI()
+    $.get(basePath+'/setting/play_mode/'+play_mode,function (data,st) {
+
     })
 });
 
 
 //和服务端通信，被动控制
-var socket = io.connect('/');
+var socket = io.connect('http://localhost:3000');
 //事件
 socket.on('event', function (data){
     console.log('event');
