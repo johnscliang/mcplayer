@@ -5,7 +5,6 @@ var mHost = window.location.host;
 var basePath = 'http://'+(mHost == '' ? '127.0.0.1':mHost)+':3000';
 var mAudioInfo;
 var mMusicList;
-var mMusicStep;
 
 function init(callback) {
     $.get(basePath+'/res/get_audio_prop',function (audioInfo,st) {
@@ -35,6 +34,10 @@ function updateMusicProgress() {
         return;
     }
     setTimeout(function () {
+        refreshUI();
+        // updateMusicProgress()
+    },1000);
+    /*setTimeout(function () {
         var currentValue = $("#music_progress").roundSlider('getValue');
         var newValue = currentValue + mMusicStep;
         if(currentValue < newValue){
@@ -46,29 +49,23 @@ function updateMusicProgress() {
             $('#current_time').html(formatSeconds(mAudioInfo.currentTime));
         }
         updateMusicProgress()
-    },1000);
+    },1000);*/
 }
 
 function refreshUI() {
-    console.log('执行refreshUI()');
     init(function (ok) {
         if(ok){
             //设置音乐信息
             $('input[type="range"]').val(mAudioInfo.volume).change();//音量
             $('#voice').html(mAudioInfo.volume);
             $('#play_mode').html(mAudioInfo.play_mode == 'normal' ? '顺序播放':'随机播放');
-            $('#play_or_pause').html(mAudioInfo.paused ? '暂停':'播放');
+            $('#play_or_pause').html(mAudioInfo.paused ? '播放':'暂停');
             $('#current_music_name').html(mAudioInfo.src);
-            $('#total_time').html(formatSeconds(mAudioInfo.duration));
-            $('#current_time').html(formatSeconds(mAudioInfo.currentTime));
-            var musicValue = (360 * mAudioInfo.currentTime)/(mAudioInfo.duration);
-            $("#music_progress").roundSlider('setValue',musicValue);
-            mMusicStep = mAudioInfo.duration / 360;
-            updateMusicProgress();
         }else{
             //客户端方法，本地端注释
             // $('#error_tips').show();
         }
+        console.log('执行refreshUI()',ok);
     })
 }
 
@@ -136,9 +133,9 @@ $('#play_back').click(function () {
 $('#play_or_pause').click(function () {
     var order;
     if($(this).html() == '暂停'){
-        order = 'play'
-    }else{
         order = 'pause'
+    }else{
+        order = 'play'
     }
     $.get(basePath+'/ctrl/play/'+order,function (data,st) {
 
@@ -162,15 +159,21 @@ $('#check_mode').click(function () {
 var socket = io.connect('http://localhost:3000');
 //事件
 socket.on('event', function (data){
-    console.log('event');
-    console.log(data);
-    refreshUI();
-    // switch (data.name){
-    //     case 'play'://播放事件，上一首，下一首，暂停/播放
-    //     case 'check_index'://选取一首
-    //     case 'setCurrentTime'://音乐进度改变
-    //     case 'refresh_music_list'://刷新歌单
-    // }
+    console.log('event',data.name);
+    //console.log(data);
+    switch (data.name){
+        case 'play'://播放事件，上一首，下一首，暂停/播放
+        case 'check_index'://选取一首
+        case 'setCurrentTime'://音乐进度改变
+        case 'refresh_music_list'://刷新歌单
+            refreshUI();
+            break;
+        case 'update_time':
+            $('#total_time').html(formatSeconds(data.d.duration));
+            $('#current_time').html(formatSeconds(data.d.currentTime));
+            $("#music_progress").roundSlider('setValue',data.d.music_progress_value);
+            break;
+    }
 });
 
 socket.on('setting', function (data){

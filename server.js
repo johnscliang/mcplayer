@@ -89,14 +89,27 @@ mAudio.onended = function() {
 //开始播放时
 mAudio.addEventListener('play',function () {
    //
-    console.log('mAudioInfo',mAudioInfo);
+    console.log('audion play');
     if(!mAudioInfo){
         console.log('第一次播放');
         refreshUI();
     }
+    updateCurrentTime()
 });
 
-
+function updateCurrentTime() {
+    if(mAudio.paused){
+        return;
+    }
+    global.socket.emit('event', {name : 'update_time' ,d : {
+        duration : mAudio.duration
+        ,currentTime : mAudio.currentTime
+        ,music_progress_value : (mAudio.currentTime * 360)/mAudio.duration
+    }});
+    setTimeout(function () {
+        updateCurrentTime()
+    },1000);
+}
 
 
 
