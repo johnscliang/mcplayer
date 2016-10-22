@@ -86,21 +86,12 @@ mAudio.onended = function() {
     //         break;
     // }
 };
-
-mAudio.pause = function() {
-    console.log('暂停事件');
-    // global.socket.emit('event', {name : 'update_bt' ,d : {
-    //     paused : mAudio.paused
-    // }});
-    // switch (mPlayMode){
-    //     case 'normal':
-    //         playMusic('front');
-    //         break;
-    //     case 'random':
-    //         playMusic('random');
-    //         break;
-    // }
-};
+//监听暂停事件
+mAudio.addEventListener('pause',function () {
+    global.socket.emit('event', {name : 'update_bt' ,d : {
+        paused : mAudio.paused
+    }});
+});
 
 //开始播放时
 mAudio.addEventListener('play',function () {
