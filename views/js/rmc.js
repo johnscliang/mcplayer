@@ -107,7 +107,8 @@ socket.on('event', function (data){
         case 'check_index'://选取一首
         case 'setCurrentTime'://音乐进度改变
         case 'refresh_music_list'://刷新歌单
-            //TODO 请求新歌单
+            //请求新歌单
+            getNewMusicList();
             break;
         case 'update_ui':
             // console.log('远程端收到更新');
@@ -171,8 +172,12 @@ var vueMusicList = new Vue({
         }
     }
 });
-//获取
-$.get('/res/get_music_list',function (data,st) {
-    console.log(data);
-    vueMusicList.music_list = data;
-});
+//获取最新列表
+function getNewMusicList() {
+    $.get('/res/get_music_list',function (data,st) {
+        console.log(data);
+        vueMusicList.music_list = data;
+    });
+}
+
+getNewMusicList();
