@@ -15,7 +15,7 @@ function startWatch(chooesdDir) {
         console.log('Initial scan complete. Ready for changes');
         ready = true;
     }).on('all',function (event,path) {
-        console.log(event , path);
+        //console.log(event , path);
         if(ready){
             startWork();//有变化，重新开始
         }
@@ -83,7 +83,7 @@ startWork();
 mAudio.onended = function() {
     switch (mPlayMode){
         case 'normal':
-            mCurrentIndex = (mCurrentIndex == mList.length-1 ? 0 :(mCurrentIndex+1));
+            mCurrentIndex = (mCurrentIndex == mList.length-1 ? 0 :(+mCurrentIndex+1));
             break;
         case 'random':
             var random = getRandom(0,mList.length - 1);
@@ -199,7 +199,7 @@ router.get('/ctrl/play/:order', function(req, res) {
             mCurrentIndex = (mCurrentIndex == 0 ? (mList.length-1):(mCurrentIndex-1));
             break;
         case 'next':
-            mCurrentIndex = (mCurrentIndex == mList.length-1 ? 0 :(mCurrentIndex+1));
+            mCurrentIndex = (mCurrentIndex == mList.length-1 ? 0 :(+mCurrentIndex+1));
             break;
         case 'random':
             var random = getRandom(0,mList.length - 1);
