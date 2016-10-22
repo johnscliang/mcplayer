@@ -44,7 +44,7 @@
                 <div style="text-align: center">
                     <div style="text-align: center">
                         <div style="color: #707070">
-                            随机播放<span>♫</span>
+                            <span id="play_mode">随机播放</span><span>♫</span>
                         </div>
                         <a class="button primary">切换</a>
                     </div>
@@ -70,6 +70,18 @@
         <input type="range" id="range_volume" value="80" min="0" max="100" step="1"/>
     </div>
 
+    <!--本地端特有-->
+    <div style="padding: 10px">
+        <button class="button" type="button" id="start">选择一个文件夹</button>
+        &nbsp;&nbsp;<span id="current_dir">当前文件夹</span>
+        <br/>
+        <br/>
+        <div style="padding: 1em;border: 2px solid hotpink;text-align: center;border-radius: 5px">
+            <p>扫码进入控制器</p>
+            <div style="position: relative;left: 35%" id="qrcode"></div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -79,73 +91,31 @@
         <b>音乐列表 ♫</b>
     </div>
     <div style="margin-top: 2.5em"></div>
-    <div>111111111111111111</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
+    <ul id="list">
+        <li v-for="item in items">
+            <div @click="checkout(item)">
+                {{ item.fileName }}
+            </div>
+        </li>
+    </ul>
 </div>
 
-<div id="error_tips" hidden style="position: absolute;top: 0;z-index: 10;width: 100%;height: 100%;background: white">
-    Opps~电脑端没打开？<br/>
-    手机和电脑没有用同一个WiFi？
-    <br/>
-    <div style="text-align: center;margin-top: 5em">
-        <button style="height: 6em" onclick="window.location.reload()" class="button">点击刷新</button>
-    </div>
-
+<!--嵌入服务端的组件-->
+<div hidden>
+    <audio id="audio" controls autoplay/>
 </div>
 
 <!-- jQuery library -->
 <script src="./js/libs/jquery-1.9.1.min.js"></script>
+<script src="./js/libs/socket.io.js"></script>
 <script src="./js/libs/vue.js"></script>
-<!--<script src="./js/utils/fileUtil.js"></script>-->
+<script src="js/libs/jquery.qrcode.min.js"></script>
 <script src="js/utils/CM.js"></script>
 <script src="plugs/rangeslider/rangeslider.min.js"></script>
 <script src="plugs/roundSlider/roundslider.min.js"></script>
 <!--自定义脚本-->
-<script src="./js/player.js"></script>
+<script src="js/controller.js"></script>
+<script src="../server.js"></script>
 
 </body>
 </html>
