@@ -3,6 +3,7 @@
  */
 var mHost = window.location.host;
 var basePath = 'http://'+(mHost == '' ? 'localhost':mHost)+':3000';
+var mAudioInfo;
 var mMusicList;
 
 
@@ -59,7 +60,8 @@ $('#back2main').click(function () {
 });
 //下一首
 $('#play_next').click(function () {
-    $.get(basePath+'/ctrl/play/next',function (data,st) {
+    var order = mAudioInfo.play_mode == 'normal' ? 'next':'random';
+    $.get(basePath+'/ctrl/play/'+order,function (data,st) {
 
     })
 });
@@ -100,7 +102,7 @@ var socket = io.connect(basePath);
 // var socket = io.connect('http://localhost:3000');
 //事件
 socket.on('event', function (data){
-    console.log('event',data.name,data.order);
+    // console.log('event',data.name,data.order);
     //console.log(data);
     switch (data.name){
         case 'play'://播放事件，上一首，下一首，暂停/播放
@@ -122,13 +124,12 @@ socket.on('event', function (data){
             $('#play_mode').html(data.d.play_mode == 'normal' ? '顺序播放':'随机播放');
             $('#play_or_pause').html(data.d.paused ? '播放':'暂停');
             $('#current_music_name').html(data.d.src);
+            //
+            mAudioInfo = data.d;
             break;
         case 'update_bt'://暂停事件
             console.log(data.d.paused);
             $('#play_or_pause').html(data.d.paused ? '播放':'暂停');
-            break;
-        case 'update_volume':
-            // $('#voice').html(data.d.volume);
             break;
     }
 });
@@ -136,14 +137,15 @@ socket.on('event', function (data){
 socket.on('setting', function (data){
     console.log('setting');
     console.log(data);
-    // switch (data.name){
-    //     case 'play_mode':
-    //         //播放模式设置
-    //         $('#play_mode').html(data.d == 'normal' ? '顺序播放':'随机播放');
-    //         break;
-    //     case 'volume':
-    //         //音量设置
-    //         //重新获取音乐信息
-    //         break;
-    // }
+    switch (data.name){
+        case 'play_mode':
+            //播放模式设置
+            $('#play_mode').html(data.d == 'normal' ? '顺序播放':'随机播放');
+            break;
+        case 'volume':
+            //音量设置
+            $('#voice').html(data.d);
+            //重新获取音乐信息
+            break;
+    }
 });

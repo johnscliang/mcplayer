@@ -186,20 +186,17 @@ router.get('/ctrl/play/:order', function(req, res) {
             }
             break;
         case 'back':
+            mCurrentIndex = (mCurrentIndex == 0 ? (mList.length-1):(mCurrentIndex-1));
+            break;
         case 'next':
-            if(mPlayMode == 'normal'){
-                if(mCurrentIndex == 0){
-                    mCurrentIndex = (mList.length - 1);
-                }else{
-                    mCurrentIndex = mCurrentIndex + (order == 'back' ? -1 : 1);
-                }
-            }else if(mPlayMode == 'random'){
-                var random = getRandom(0,mList.length - 1);
-                while (mCurrentIndex == random){
-                    random = getRandom(0,mList.length - 1);
-                }
-                mCurrentIndex = random;
+            mCurrentIndex = (mCurrentIndex == mList.length-1 ? 0 :(mCurrentIndex+1));
+            break;
+        case 'random':
+            var random = getRandom(0,mList.length - 1);
+            while (mCurrentIndex == random){
+                random = getRandom(0,mList.length - 1);
             }
+            mCurrentIndex = random;
             break;
     }
     console.log('mCurrentIndex',mCurrentIndex);
