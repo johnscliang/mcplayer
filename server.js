@@ -90,10 +90,6 @@ mAudio.onended = function() {
 mAudio.addEventListener('play',function () {
    //
     console.log('audion play');
-    if(!mAudioInfo){
-        console.log('第一次播放');
-        refreshUI();
-    }
     updateCurrentTime()
 });
 
@@ -101,10 +97,16 @@ function updateCurrentTime() {
     if(mAudio.paused){
         return;
     }
-    global.socket.emit('event', {name : 'update_time' ,d : {
+    var audioSrc = mAudio.src.toString().split('\/');
+    var src = decodeURI(audioSrc[audioSrc.length - 1]);
+    global.socket.emit('event', {name : 'update_ui' ,d : {
         duration : mAudio.duration
         ,currentTime : mAudio.currentTime
         ,music_progress_value : (mAudio.currentTime * 360)/mAudio.duration
+        ,volume : mAudio.volume * 100
+        ,paused : mAudio.paused
+        ,src : src
+        ,play_mode : mPlayMode
     }});
     setTimeout(function () {
         updateCurrentTime()
