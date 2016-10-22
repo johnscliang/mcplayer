@@ -97,10 +97,10 @@ mAudio.addEventListener('pause',function () {
 mAudio.addEventListener('play',function () {
    //
     console.log('audion play');
-    updateCurrentTime()
+    updateUI()
 });
 
-function updateCurrentTime() {
+function updateUI() {
     if(mAudio.paused){
         return;
     }
@@ -110,13 +110,13 @@ function updateCurrentTime() {
         duration : mAudio.duration
         ,currentTime : mAudio.currentTime
         ,music_progress_value : (mAudio.currentTime * 360)/mAudio.duration
-        ,volume : mAudio.volume * 100
+        ,volume : parseInt(mAudio.volume * 100)
         ,paused : mAudio.paused
         ,src : src
         ,play_mode : mPlayMode
     }});
     setTimeout(function () {
-        updateCurrentTime()
+        updateUI()
     },1000);
 }
 
@@ -218,14 +218,14 @@ router.get('/ctrl/play/:order', function(req, res) {
 });
 
 //设置音乐进度
-router.get('/ctrl/audio/currentTime/:second', function(req, res) {
-    var second = req.params.second;
-    if(second){
-        mAudio.currentTime = second;
+router.get('/ctrl/audio/currentTime/:value', function(req, res) {
+    //value换算成秒数
+    var value = req.params.value;
+    var musicValue = parseInt((value * mAudio.duration) / 360);
+    if(musicValue){
+        mAudio.currentTime = musicValue;
     }
-
-    global.socket.emit('event', {name : 'setCurrentTime' ,d : second });
-    
+    // global.socket.emit('event', {name : 'setCurrentTime' ,d : musicValue });
     res.json({
         c : 0
         ,currentTime : mAudio.currentTime

@@ -7,12 +7,17 @@ var mMusicList;
 
 
 //手动音量控制
+var mMusicVolumeDragging = false;
 $('#range_volume').rangeslider({
     polyfill:false
+    ,onSlide: function(position, value) {
+        mMusicVolumeDragging = true;
+    }
     ,onSlideEnd: function(position, value) {
+        mMusicVolumeDragging = false;
         //设置音量
         $.get(basePath+'/setting/volume/'+value,function (data,st) {
-            //$('#voice').html(value);
+            
         })
     }
 });
@@ -31,14 +36,20 @@ $("#music_progress").roundSlider({
 $("#music_progress").on("change", function (e) {
     // console.log(e.value);
     // console.log($("#music_progress").roundSlider('getValue'));
-    //换算成秒数，
-    var musicValue = parseInt((e.value * mAudioInfo.duration) / 360);
     //设置远程，成功之后继续
-    $.get(basePath+'/ctrl/audio/currentTime/'+musicValue,function (data,st) {
+    $.get(basePath+'/ctrl/audio/currentTime/'+e.value,function (data,st) {
         //mAudioInfo.currentTime = parseInt(musicValue);
         //$('#current_time').html(formatSeconds(mAudioInfo.currentTime));
     })
 });
+var mMusicProgressDragging = false;
+$("#music_progress").on("drag", function (e) {
+    mMusicProgressDragging = true;
+});
+$("#music_progress").on("stop", function (e) {
+    mMusicProgressDragging = false;
+});
+
 //交互：切换菜单
 $('#go2list').click(function () {
     $('#music_list').fadeIn();
@@ -101,9 +112,13 @@ socket.on('event', function (data){
         case 'update_ui':
             $('#total_time').html(formatSeconds(data.d.duration));
             $('#current_time').html(formatSeconds(data.d.currentTime));
-            $("#music_progress").roundSlider('setValue',data.d.music_progress_value);
-            $('input[type="range"]').val(data.d.volume).change();//音量
+            if(!mMusicProgressDragging){//如果没有被拉着
+                $("#music_progress").roundSlider('setValue',data.d.music_progress_value);
+            }
             $('#voice').html(data.d.volume);
+            if(!mMusicVolumeDragging){
+                $('input[type="range"]').val(data.d.volume).change();//音量
+            }
             $('#play_mode').html(data.d.play_mode == 'normal' ? '顺序播放':'随机播放');
             $('#play_or_pause').html(data.d.paused ? '播放':'暂停');
             $('#current_music_name').html(data.d.src);
@@ -111,6 +126,9 @@ socket.on('event', function (data){
         case 'update_bt'://暂停事件
             console.log(data.d.paused);
             $('#play_or_pause').html(data.d.paused ? '播放':'暂停');
+            break;
+        case 'update_volume':
+            // $('#voice').html(data.d.volume);
             break;
     }
 });
