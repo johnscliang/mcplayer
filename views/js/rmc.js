@@ -59,8 +59,8 @@ $('#back2main').click(function () {
 });
 var hasScrolled = false;//滚动的时候设置为true
 function musicListGoneWhenNotUes(){
-    console.log('zhixing!!!',hasScrolled)
     setTimeout(function(){
+        console.log('zhixing!!!',hasScrolled)
         if(!hasScrolled){
             $('#back2main').click()
         }else{
