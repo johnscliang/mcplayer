@@ -1,6 +1,6 @@
 {
   "name": "mcplay",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A music palyer that counld be control by a H5 page online",
   "main": "main.js",
   "scripts": {
