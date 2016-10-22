@@ -1,8 +1,6 @@
 /**
  * Created by admin on 2016/10/20.
  */
-var mHost = window.location.host;
-var basePath = 'http://'+(mHost == '' ? 'localhost':mHost)+':3000';
 var mAudioInfo;
 var mMusicList;
 
@@ -17,7 +15,7 @@ $('#range_volume').rangeslider({
     ,onSlideEnd: function(position, value) {
         mMusicVolumeDragging = false;
         //设置音量
-        $.get(basePath+'/setting/volume/'+value,function (data,st) {
+        $.get('/setting/volume/'+value,function (data,st) {
             
         })
     }
@@ -38,7 +36,7 @@ $("#music_progress").on("change", function (e) {
     // console.log(e.value);
     // console.log($("#music_progress").roundSlider('getValue'));
     //设置远程，成功之后继续
-    $.get(basePath+'/ctrl/audio/currentTime/'+e.value,function (data,st) {
+    $.get('/ctrl/audio/currentTime/'+e.value,function (data,st) {
         //mAudioInfo.currentTime = parseInt(musicValue);
         //$('#current_time').html(formatSeconds(mAudioInfo.currentTime));
     })
@@ -61,14 +59,14 @@ $('#back2main').click(function () {
 //下一首
 $('#play_next').click(function () {
     var order = mAudioInfo.play_mode == 'normal' ? 'next':'random';
-    $.get(basePath+'/ctrl/play/'+order,function (data,st) {
+    $.get('/ctrl/play/'+order,function (data,st) {
 
     })
 });
 //上一首
 $('#play_back').click(function () {
     var order = mAudioInfo.play_mode == 'normal' ? 'back':'random';
-    $.get(basePath+'/ctrl/play/'+order,function (data,st) {
+    $.get('/ctrl/play/'+order,function (data,st) {
 
     })
 });
@@ -80,7 +78,7 @@ $('#play_or_pause').click(function () {
     }else{
         order = 'play';
     }
-    $.get(basePath+'/ctrl/play/'+order,function (data,st) {
+    $.get('/ctrl/play/'+order,function (data,st) {
 
     })
 });
@@ -92,15 +90,14 @@ $('#check_mode').click(function () {
     }else {
         play_mode = 'random'
     }
-    $.get(basePath+'/setting/play_mode/'+play_mode,function (data,st) {
+    $.get('/setting/play_mode/'+play_mode,function (data,st) {
 
     })
 });
 
 
 //和服务端通信，被动控制
-var socket = io.connect(basePath);
-// var socket = io.connect('http://localhost:3000');
+var socket = io.connect('/');
 //事件
 socket.on('event', function (data){
     // console.log('event',data.name,data.order);
@@ -113,7 +110,7 @@ socket.on('event', function (data){
             //TODO 请求新歌单
             break;
         case 'update_ui':
-            console.log('本地端收到更新');
+            console.log('远程端收到更新');
             $('#total_time').html(formatSeconds(data.d.duration));
             $('#current_time').html(formatSeconds(data.d.currentTime));
             if(!mMusicProgressDragging){//如果没有被拉着
