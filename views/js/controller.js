@@ -53,6 +53,7 @@ function refreshUI() {
             $('input[type="range"]').val(mAudioInfo.volume).change();//音量
             $('#voice').html(mAudioInfo.volume);
             $('#play_mode').html(mAudioInfo.play_mode == 'normal' ? '顺序播放':'随机播放');
+            $('#play_or_pause').html(mAudioInfo.paused ? '播放':'暂停');
             $('#current_music_name').html(mAudioInfo.src);
             $('#total_time').html(formatSeconds(mAudioInfo.duration));
             $('#current_time').html(formatSeconds(mAudioInfo.currentTime));
@@ -111,13 +112,41 @@ $('#back2main').click(function () {
     $('#music_list').fadeOut();
 });
 //下一首
-
+$('#play_next').click(function () {
+    $.get('/ctrl/play/next',function (data,st) {
+        refreshUI()
+    })
+});
 //上一首
-
+$('#play_back').click(function () {
+    $.get('/ctrl/play/back',function (data,st) {
+        refreshUI()
+    })
+});
 //播放/暂停
-
+$('#play_or_pause').click(function () {
+    var order;
+    if($(this).html() == '暂停'){
+        order = 'play'
+    }else{
+        order = 'pause'
+    }
+    $.get('/ctrl/play/'+order,function (data,st) {
+        refreshUI()
+    })
+});
 //切换模式
-
+$('#check_mode').click(function () {
+    var play_mode;
+    if($('#play_mode').html() == '随机播放'){
+        play_mode = 'normal'
+    }else {
+        play_mode = 'random'
+    }
+    $.get('/setting/play_mode/'+play_mode,function (data,st) {
+        refreshUI()
+    })
+});
 
 
 //和服务端通信，被动控制
