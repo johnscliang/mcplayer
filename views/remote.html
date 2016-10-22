@@ -78,53 +78,12 @@
         <a id="back2main" style="position: absolute;right: 1em;top: 0.5em;" class="button">返回</a>
         <b>音乐列表 ♫</b>
     </div>
-    <div style="margin-top: 2.5em"></div>
-    <div>111111111111111111</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
-    <div>XXXXXXXXXXXXXXXXXX</div>
+    <div style="margin-top: 2.5em;padding: 10px">
+        <div v-for="item in music_list" class="music_item" @click="check_music($index)">
+            <b class="words">{{$index+1}}.{{item}}</b>
+        </div>
+    </div>
+
 </div>
 
 <div id="error_tips" hidden style="position: absolute;top: 0;z-index: 10;width: 100%;height: 100%;background: white">

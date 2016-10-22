@@ -156,3 +156,23 @@ socket.on('setting', function (data){
 
 
 //vue
+var vueMusicList = new Vue({
+    el: '#music_list',
+    data: {
+        music_list: []
+    }
+    ,methods:{
+        check_music:function (index) {
+            // console.log(index)
+            //切换音乐
+            $.get('/ctrl/audio/currentIndex/'+index,function (data,st) {
+                $('#back2main').click()
+            })
+        }
+    }
+});
+//获取
+$.get('/res/get_music_list',function (data,st) {
+    console.log(data);
+    vueMusicList.music_list = data;
+});

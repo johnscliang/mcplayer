@@ -31,11 +31,18 @@ html, body {
 }
 
 #music_list{
-    background:#FC0;
+    background:lightpink;
     width:100%;
     overflow:auto;
     top:0px;
     position:absolute;
     z-index:10;
     bottom:0px;
+}
+
+.music_item{
+    background: hotpink;padding: 10px;border: 1px solid pink;border-radius: 8px;color: white;
+}
+.music_item:active{
+    background: deeppink;padding: 10px;border: 1px solid deeppink;border-radius: 8px;color: white;
 }

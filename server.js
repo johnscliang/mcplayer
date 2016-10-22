@@ -114,7 +114,7 @@ function updateUI() {
     if(mAudio.paused){
         return;
     }
-    console.log('updateUI');
+    // console.log('updateUI');
     var audioSrc = mAudio.src.toString().split('\/');
     var src = decodeURI(audioSrc[audioSrc.length - 1]);
     io.emit('event', {name : 'update_ui' ,d : {
