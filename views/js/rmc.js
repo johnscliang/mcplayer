@@ -52,10 +52,32 @@ $("#music_progress").on("stop", function (e) {
 //交互：切换菜单
 $('#go2list').click(function () {
     $('#music_list').fadeIn();
+    musicListGoneWhenNotUes();
 });
 $('#back2main').click(function () {
     $('#music_list').fadeOut();
 });
+var hasScrolled = false;//滚动的时候设置为true
+function musicListGoneWhenNotUes(){
+    console.log('zhixing!!!',hasScrolled)
+    setTimeout(function(){
+        if(!hasScrolled){
+            $('#back2main').click()
+        }else{
+            hasScrolled = false;
+            musicListGoneWhenNotUes()
+        }
+        
+    },5000);
+}
+
+$(function(){
+    //监听歌单的滚动
+    $('#music_list').on('scroll',function(){
+        hasScrolled = true;
+    });
+})
+
 //下一首
 $('#play_next').click(function () {
     var order = mAudioInfo.play_mode == 'normal' ? 'next':'random';
