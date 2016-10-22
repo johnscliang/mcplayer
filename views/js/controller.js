@@ -67,7 +67,8 @@ $('#play_next').click(function () {
 });
 //上一首
 $('#play_back').click(function () {
-    $.get(basePath+'/ctrl/play/back',function (data,st) {
+    var order = mAudioInfo.play_mode == 'normal' ? 'back':'random';
+    $.get(basePath+'/ctrl/play/'+order,function (data,st) {
 
     })
 });
