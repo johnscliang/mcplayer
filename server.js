@@ -160,6 +160,18 @@ app.use(express.static(path.join(__dirname,'')));//就是当前路径
 //socket连接
 io.on("connection", function( socket ){
     console.log( "一个新连接" );
+    //
+    var audioSrc = mAudio.src.toString().split('\/');
+    var src = decodeURI(audioSrc[audioSrc.length - 1]);
+    io.emit('event', {name : 'update_ui' ,d : {
+        duration : mAudio.duration
+        ,currentTime : mAudio.currentTime
+        ,music_progress_value : (mAudio.currentTime * 360)/mAudio.duration
+        ,volume : parseInt(mAudio.volume * 100)
+        ,paused : mAudio.paused
+        ,src : src
+        ,play_mode : mPlayMode
+    }});
 });
 
 http.listen(port,function(){
