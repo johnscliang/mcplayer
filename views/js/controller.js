@@ -134,7 +134,8 @@ socket.on('event', function (data){
         case 'check_index'://选取一首
         case 'setCurrentTime'://音乐进度改变
         case 'refresh_music_list'://刷新歌单
-            //TODO 请求新歌单
+            // 请求新歌单
+            getNewMusicList();
             break;
         case 'update_ui':
             // console.log('本地端收到更新');
