@@ -106,7 +106,7 @@ mAudio.addEventListener('pause',function () {
 //开始播放时
 mAudio.addEventListener('play',function () {
    //
-    console.log('audion play');
+    console.log('audio play');
     updateUI()
 });
 

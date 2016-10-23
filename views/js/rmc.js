@@ -60,9 +60,11 @@ $('#back2main').click(function () {
 var hasScrolled = false;//滚动的时候设置为true
 function musicListGoneWhenNotUes(){
     setTimeout(function(){
-        console.log('zhixing!!!',hasScrolled)
+        //console.log('zhixing!!!',hasScrolled)
         if(!hasScrolled){
-            $('#back2main').click()
+            if($('#music_list').is(':visible')){
+                $('#music_list').fadeOut();
+            }
         }else{
             hasScrolled = false;
             musicListGoneWhenNotUes()
