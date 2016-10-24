@@ -20,6 +20,11 @@
     "chokidar": "^1.5.1",
     "electron": "^1.4.3",
     "electron-packager": "^8.1.0",
-    "mime-types": "^2.1.12"
+    "mime-types": "^2.1.12",
+    "express": "4.x.x",
+    "body-parser": "*",
+    "request":"*",
+    "socket.io": "*"
+    
   }
 }
