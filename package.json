@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron .",
     "package": "electron-packager ./ mcplayer --win --out mcplayer --arch=x64 --version 1.3.4 --overwrite --ignore=node_modules",
-    "pak" : "electron-packager . mcplayer --asar --prune --platform=win32 --arch=x64 --version=1.3.4 --overwrite --icon=views/favicon.ico --out=build"
+    "pak" : "electron-packager . mcplayer --asar --prune --platform=win32 --arch=x64 --version=1.3.4 --overwrite --icon=views/favicon.ico --out=build",
+    "pak32": "electron-packager . mcplayer --asar --prune --platform=win32 --arch=ia32 --version=1.4.3 --overwrite --icon=views/favicon.ico --out=build"
   },
   "repository": "https://github.com/LanceCong/mcplayer",
   "keywords": [
