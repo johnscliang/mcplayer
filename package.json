@@ -20,7 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "chokidar": "^1.5.1",
-    "electron": "^1.4.3",
+    "electron": "^9.1.0",
     "electron-packager": "^8.1.0",
     "mime-types": "^2.1.12",
     "express": "4.x.x",
